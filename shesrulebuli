@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Shopping list example</title>
+    <style>
+      li {
+        margin-bottom: 10px;
+        list-style: none;
+      }
+
+      li button {
+        font-size: 8px;
+        margin-left: 20px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>My Tasks</h1>
+
+    <div>
+      <form action="">
+        <input type="text" name="item" id="item">
+        <button type="submit">Add item</button>
+              </form>
+    </div>
+
+    <ul>
+
+    </ul>
+    <p>სულ დასრულებულია <span id="sum">XXX</span> დავალება</p>
+
+    <script>
+      const ul = document.querySelector('ul');
+      const input = document.querySelector('input');
+      const button = document.querySelector('button');
+      const form = document.querySelector('form');
+      const sum = document.querySelector('#sum');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        let myItem = input.value;
+        if (myItem === ''){
+return
+        }
+
+        const listItem = document.createElement('li');
+        const listText = document.createElement('span');
+        const deleteBtn = document.createElement('button');
+        const checkbox = document.createElement('input');
+
+        listItem.appendChild(listText);
+        listText.textContent = myItem;
+        ul.appendChild(listItem);
+        listItem.appendChild(deleteBtn);
+        deleteBtn.textContent = 'Delete';      
+        checkbox.setAttribute("type", "checkbox");
+        listItem.prepend(checkbox);
+        
+        
+        deleteBtn.addEventListener('click', () => {
+          ul.removeChild(listItem);
+        })
+
+        checkbox.addEventListener('change', (event) => {
+          if (event.target.checked){
+            listItem.setAttribute("style", "text-decoration: line-through");
+        }
+        else {
+          listItem.setAttribute("style", "text-decoration: none");
+        }
+        let c = ul.children;
+        let result = 0
+        for (let i = 0; i < c.length; i++){
+           if (c[i].firstChild.checked){
+        result +=1
+           } 
+        }
+         sum.textContent = result
+        })
+
+        
+        
+        input.value = '';
+        input.focus();
+      })
+
+            
+    </script>
+  </body>
+</html>
